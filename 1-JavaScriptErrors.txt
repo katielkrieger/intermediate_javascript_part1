@@ -1,0 +1,71 @@
+Katie Krieger
+4/11/17
+
+
+Debugging Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-debugging-exercises
+
+Part 1
+- The throw keyword allows us to return an error and stop code execution. We can also add a message string to the error to give more details about what went wrong.
+- The finally keyword, within a try/catch statement, allows us to execute a block of code regardess of an error being thrown.
+- A TypeError occurs when you make incorrect use of certain types, like trying to access properties on undefined or invoke something that isn't a function. A ReferenceError occurs when we try to access a variable that does not exist in that scope.
+- Open Chrome's developer tools (command + option + j on a Mac), click on the Sources tab, and then click on the code snippets tab from the left-side window. Click on + New Snippet and give it a name.
+- An exception is an error. Caught exceptions are errors evaluated in a try/catch block.
+- We catch errors in JavaScript using a try/catch statement. We place code inside of the try block, and if an error is thrown, the code moves to the catch block, and then continues to execute. Example:
+	try {
+		notAFunction();
+	} catch(e) {
+		console.log("The error is ", e);
+	}
+
+1. ReferenceError - because the variable has not been assigned yet. We can fix it by assigning the variable elsewhere in the code using the var keyword.
+2. TypeError - because displayInfo is undefined, not a function. We can fix it by creating a function called displayInfo.
+3. TypeError - displayInfo is not within the data object, so it's undefined. Since we're trying to set a property on undefined, it will return a TypeError. We can fix it by adding displayInfo to the data object first.
+4. ReferenceError - we're trying to access the variable thing, which does not exist in the global scope. We can fix it by making thing a global variable (removing the var keyword) or by trying to use thing within the function data.
+
+
+Part 2
+1.
+for(var i=0; i < 5; i++){
+	console.log(i);
+}
+
+The loop did not run because it's not possible for i=0 and for i > 5.  I changed the condition to i < 5. This didn't throw an error because the code was valid and was not doing anything that isn't allowed.
+
+2.
+function addIfEven(num){
+	if(num % 2 === 0){
+		return num + 5;
+	}
+	return num;
+}
+A ReferenceError was thrown because the if statement condition only had a single equals sign, which is for assigning variables, and the left-side was invalid for a variable assignment. I changed the single equals sign to three (strict equality comparison).
+
+3. 
+function loopToFive(){
+    for(var i=0; i < 5; i++){
+        console.log(i);
+    }
+}
+A SyntaxError was thrown because the for loop inputs were separated by commans instead of semi-colons. I changed them to semi-colons.
+
+4. 
+function displayEvenNumbers(){
+    var numbers = [1,2,3,4,5,6,7,8];
+    var evenNumbers = [];
+    for(var i=0; i<numbers.length; i++){
+        if(numbers[i] % 2 === 0) {
+            evenNumbers.push(numbers[i]);
+        }
+    }
+    return evenNumbers;
+}
+displayEvenNumbers(); 
+
+- First, a SyntaxError was thrown because the for loop conditions had an extra semi-colon after the counter. I removed this semi-colon.
+- Second, a SyntaxError was thrown because the if statement had an extra semi-colon at the end of the condition statement, after the ending parentheses. I removed this semi-colon.
+- Third, a ReferenceError was thrown because the if statement condition had a single equals sign instead of three, meaning an assignment instead of a comparison. I changed this to three.
+- Fourth, I set a breakpoint on line 6 (after putting this all inside of a try / catch statement, so line 6 is the starting line of the if statement). I can see that before the if statement is executed, numbers = [1, 2, 3, 4, 5, 6, 7, 8], and we're trying to calculate numbers % 2, which doesn't make sense. We should instead be calculating numbers[i] % 2, so I fixed that.
+- Fifth, the code now returns the odd numbers. That's because we're pushing i instead of numbers[i]. I fixed that.
+- Sixth, the code now returns [], so I put a breakpoint on the line where we return evenNumbers. I can see that we're still on the first loop through the for loop because i = 0. This return statement should be after the for loop, not within it, so I moved it.
+- Seventh, the code now returns [2, 4, 6], so it's stopping too early to catch the 8. Looking back at the for loop "while true" condition, we can see it will loop while i<numbers.length-1. This should stop at numbers.length, so I removed the "-1".

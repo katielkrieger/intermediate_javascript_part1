@@ -1,0 +1,159 @@
+Katie Krieger
+4/11/17
+
+
+Nested Objects
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-nested-data-structures-objects
+
+function displayCities() {
+  var cities = instructorData.additionalData.moreDetails.citiesLivedIn;
+  for (i=0; i<cities.length; i++) {
+    console.log(cities[i]);
+  }
+}
+
+function displayHometownData() {
+  var hometowns = instructorData.additionalData.moreDetails.hometown;
+  for (var town in hometowns) {
+    console.log(hometowns[town]);
+  }
+}
+
+function addDetail(key, value) {
+  var details = instructorData.additionalData.moreDetails;
+  details[key] = value;
+  return details;
+}
+
+function removeDetail(key) {
+  var details = instructorData.additionalData.moreDetails;
+  delete details[key];
+  return details;
+}
+
+
+Nested Object Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-nested-data-structures-objects-exercises
+
+var primeArray = nestedData.innerData.numberData.primeNumbers;
+for (i=0; i<primeArray.length; i++) {
+  console.log(primeArray[i]);
+}
+
+var fibArray = nestedData.innerData.numberData.fibonnaci;
+for (i=0; i<fibArray.length; i++) {
+  if(fibArray[i] % 2 === 0){
+    console.log(fibArray[i]);
+  }
+}
+
+var orderArray = nestedData.innerData.order;
+console.log(orderArray[1]);
+
+nestedData.innerData.addSnack("chocolate");
+
+The special keyword "this", when called as a method of an object, is set to the object the method is called on, in this case: nestedData.innerData.
+
+
+function addSpeaker(name) {
+  var speakersArray = nestedObject.speakers;
+  speakersArray.push({
+    name: name
+  });
+}
+
+function addLanguage(lang,helloInLang) {
+  var langObj = nestedObject.data.languages;
+  langObj[lang] = {
+    hello: helloInLang
+  }
+}
+
+function addCountry(country,capital,population) {
+  var eurCountriesObj = nestedObject.data.continents.europe.countries;
+  eurCountriesObj[country] = {
+      capital: capital,
+      population: population
+  }
+}
+
+
+Nested Arrays Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-nested-data-structures-arrays
+
+
+function printEvens() {
+  for (var i=0; i<nestedArr.length; i++) {
+    for (var j=0; j<nestedArr[i].length; j++) {
+      if (nestedArr[i][j] % 2 === 0) {
+        console.log(nestedArr[i][j]);
+      }
+    }
+  }
+}
+
+function sumTotal() {
+  var sum = 0;
+  for (var i=0; i<nestedArr.length; i++) {
+    for (var j=0; j<nestedArr[i].length; j++) {
+      for (var k=0; k<nestedArr[i][j].length; k++) {
+        sum += nestedArr[i][j][k];
+      }
+    }
+  }
+  return sum;
+}
+
+function allVowels() {
+  counter = 0;
+  for (var i=0; i<nestedArr.length; i++) {
+    if (Array.isArray(nestedArr[i])) {
+      for (var j=0; j<nestedArr[i].length; j++) {
+        if (Array.isArray(nestedArr[i][j])) {
+          for (var k=0; k<nestedArr[i][j].length; k++) {
+            if (Array.isArray(nestedArr[i][j][k])) {
+              for (var l=0; l<nestedArr[i][j][k].length; l++) {
+                if (Array.isArray(nestedArr[i][j][k][l])) {
+                } else {
+                counter += nestedArr[i][j][k][l].match(/[aeiou]/gi).length;}
+              }
+            } else {
+            counter += nestedArr[i][j][k].match(/[aeiou]/gi).length;}
+          }
+        } else {
+        counter += nestedArr[i][j].match(/[aeiou]/gi).length;}
+      }
+    } else {
+    counter += nestedArr[i].match(/[aeiou]/gi).length;}
+  }
+  return counter;
+}
+
+
+Nested Arrays Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-nested-data-structures-arrays-exercises
+
+function rotate2(arr,num) {
+  move = num % arr.length;
+  for (i=0; i<move; i++) {
+    arr.unshift(arr.pop());
+  }
+  return arr;
+}
+
+function makeXOGrid(rows,cols) {
+  var arr = [];
+  var counter = true;
+  for (i=0; i<rows; i++) {
+    arr[i] = [];
+    for (j=0; j<cols; j++) {
+      if (counter) {
+        arr[i][j] = "X";
+      } else {
+        arr[i][j] = "O";
+      }
+      counter = !counter;
+    }
+  }
+  return arr;
+}

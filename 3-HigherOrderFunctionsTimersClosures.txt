@@ -1,0 +1,150 @@
+Katie Krieger
+4/12/17
+
+
+Higher Order Functions Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-higher-order-functions
+
+function map(arr, callback) {
+  var newArr = [];
+  for (var i=0; i<arr.length; i++) {
+    newArr.push(callback(arr[i]));
+  }
+  return newArr;
+}
+
+function reject(arr, callback) {
+  var newArr = [];
+  for (var i=0; i<arr.length; i++) {
+    if(callback(arr[i]) !== true) {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
+
+Timers Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-timers
+
+1. Both the setTimeout and setInterval functions accept a callback function and a time in milliseconds as parameters. setTimeout will run the callback function once. setInterval will run it an infinite amount of times until the timer is cleared.
+2. With setInterval you can control how frequently the callback function is executed (and when it should stop). With a loop, you cannot control the frequency or stop time.
+3. The first parameter that setInterval and setTimeout accept is a callback function to be executed.
+4. It's important to store the result of setInterval and setTimeout in a variable because they both return their timer id, which we can pass to the clearTimeout or clearInterval methods to control when they stop.
+5. In the context of setTimeout and setInterval, asynchronous means that the callback functions to be executed won't execute until they can leave the event queue (when the stack is clear), which means that they won't execute until other functions in the stack have executed. 
+
+
+Closures Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-closures
+
+1. A closure is a function that makes use of variables defined in outer functions that have previously returned. 
+2. Closures are useful for keeping variables private (out of the global scope and so it cannot be overwritten) and for creating modules that can be reused easily.
+3. A module is a piece of code that's encapsulated and can be reused quite easily. It's written by putting a closure inside of an IIFE.
+4. The arguments array-like object is a special keyword that contains the arguments passed into a function.
+5. 
+function createCounter() {
+  var count = 0;
+  return function() {
+    return ++count;
+  }
+}
+
+
+Higher Order Functions, Timers, and Closures Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-hof-timers-closures-exercises
+
+1. countDown:
+
+function countdown(num){
+  var stop = setInterval(function() {
+    if(num===1) {
+      console.log("DONE!")
+    } else {
+      console.log(--num);
+    }
+    setInterval(function(){
+      clearInterval(stop);
+    },num*1000);
+  }, 1000);
+}
+
+2. randomGame:
+
+function randomGame(){
+  var addOne = createCounter();
+  var done = setInterval(function() {
+    var random = Math.random();
+    count = addOne();
+    if(random > 0.75){
+      clearInterval(done);
+      console.log("It took " + count + " tries.");
+    }
+  },1000);
+}
+
+function createCounter(){
+  var count = 0;
+  return function(){
+    return ++count;
+  }
+}
+
+3. isEven:
+
+function isEven(num){
+  return num % 2 === 0;
+}
+
+4. isOdd:
+
+function isOdd(num){
+  return num % 2 !== 0;
+}
+
+5. isPrime:
+
+function isPrime(num){
+  for(var i=2; i<=Math.sqrt(num); i++) {
+    if(num % i === 0) {
+      return false;
+    }
+  }
+  return num > 1;
+}
+
+6. numFact:
+
+function numFact(num, callback) {
+  return callback(num);
+};
+
+7. find:
+
+function find(arr, callback) {
+  for (var i=0; i<arr.length; i++) {
+    if(callback(arr[i])) {
+      return arr[i];
+    }
+  }
+  return undefined;
+}
+
+8. findIndex:
+
+function findIndex(arr, callback) {
+  for (var i=0; i<arr.length; i++) {
+    if(callback(arr[i])) {
+      return i;
+    }
+  }
+}
+
+9. specialMultiply:
+
+function specialMultiply(a, b) {
+  if(arguments.length === 1)
+    return function(b) {
+      return a * b;
+    }
+  return a *b;
+}

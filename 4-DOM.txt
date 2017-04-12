@@ -1,0 +1,51 @@
+Katie Krieger
+4/12/17
+
+
+DOM Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-dom-exercises
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+    </div>
+    <section id="container">
+        <ul>
+            <li class="first">one</li>
+            <li class="second">two</li>
+            <li class="third">three</li>
+        </ul>
+        <ol>
+            <li class="first">one</li>
+            <li class="second">two</li>
+            <li class="third">three</li>
+        </ol>
+    </section>
+    <div class="footer">
+    </div>
+</body>
+</html>
+
+1. document.getElementById("container");
+2. document.querySelector("#container");
+3. document.getElementsByClassName("second");
+4. document.querySelector("ol .third");
+5. document.querySelector("#container).innerText = "Hello";
+6. var footerDiv = document.querySelector(".footer");
+   footerDiv.classList.add("main");
+7. footerDiv.classList.remove("main");
+8. var newLi = document.createElement("li");
+9. newLi.innerText = "four";
+10. var ulElement = document.querySelector("ul");
+	ulElement.appendChild(newLi);
+11. var liInOld = document.querySelector("ol li");
+	for (var i=0; i<liInOld.length; i++) {
+		liInOld[i].style.backgroundColor = "green";
+	}
+12. var body = document.GetElementById("body");
+	body.removeChild(footerDiv);

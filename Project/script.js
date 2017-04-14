@@ -35,7 +35,6 @@ window.onload = function(){
 
 	// if class is down, gray. if class is up, use this code
 
-
 	upObj = {}
 	for (var i=0; i<4; i++) {
 		for (var j=0; j<4; j++) {
@@ -53,6 +52,10 @@ window.onload = function(){
 
 	var cells = document.querySelectorAll(".row > div");
 	var endGameCounter = 0;
+	var turnsStart = 10;
+	var turns = turnsStart;
+	var display = document.getElementById("display");
+	display.innerText = "You have "+turns+" turns remaining"
 	var prevColor = Math.random();
 	var disabled = false;
 
@@ -64,9 +67,7 @@ window.onload = function(){
 					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 up");
 					event.target.style.backgroundColor = upObj[event.target.getAttribute("id")];
 					endGameCounter += 1;
-					//alert(endGameCounter);
 					if (event.target.style.backgroundColor === prevColor && endGameCounter % 2===0) {
-						//alert("Match!");
 					} else if (event.target.style.backgroundColor !== prevColor && endGameCounter % 2===0) {
 						disabled = true;
 						setTimeout(function(){
@@ -74,12 +75,7 @@ window.onload = function(){
 						},1000);
 					} 
 					prevColor = event.target.style.backgroundColor;
-				} /*else {
-					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 down");
-					event.target.style.backgroundColor = "lightgray";
-					endGameCounter -= 1;
-					prevColor = Math.random();
-				}*/
+				} 
 				if (endGameCounter === 16) {
 					youWin();
 				}
@@ -99,18 +95,37 @@ window.onload = function(){
 		}
 		endGameCounter = 0;
 		disabled = false;
+		turns -= 1;
+		if(turns === 1){
+			display.innerText = "Careful! Only one turn remaining."
+		} else if (turns ===0) {
+			display.innerText = "You lose!"
+		} else {
+			display.innerText = "You have "+turns+" turns remaining."
+		}
+		if (turns < 1) {
+			youLose();
+		}
 	}
 
 	function youWin(){
 		setTimeout(function(){
-			alert("You win!");
+			alert("You win! It took you "+ (turnsStart-turns) + " turns.");
+			display.innerText = "You win with " (turnsStart-turns) + " turns remaining."
 		},250);
 		setTimeout(function(){
 			location.reload();
 		},1500);
 	}
 
-
+	function youLose(){
+		setTimeout(function(){
+			alert("You lose!");
+		},250);
+		setTimeout(function(){
+			location.reload();
+		},1500);
+	}
 
 
 /*

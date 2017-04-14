@@ -56,10 +56,10 @@ window.onload = function(){
 	var prevColor = Math.random();
 	var disabled = false;
 
-	if(disabled === false){
-		for(i=0; i<cells.length; i++) {
-			cells[i].addEventListener("click", function(event){
-				
+	
+	for(i=0; i<cells.length; i++) {
+		cells[i].addEventListener("click", function(event){
+			if(disabled === false){
 				if (event.target.getAttribute("class") === "col-xs-2 col-xs-offset-1 down") {
 					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 up");
 					event.target.style.backgroundColor = upObj[event.target.getAttribute("id")];
@@ -74,19 +74,19 @@ window.onload = function(){
 						},1000);
 					} 
 					prevColor = event.target.style.backgroundColor;
-				} else {
+				} /*else {
 					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 down");
 					event.target.style.backgroundColor = "lightgray";
 					endGameCounter -= 1;
 					prevColor = Math.random();
-				}
+				}*/
 				if (endGameCounter === 16) {
-					alert ("You win!");
-					reset();
+					youWin();
 				}
-			});
-		}
+			}
+		});
 	}
+	
 	
 	// end game if all are up
 
@@ -101,9 +101,16 @@ window.onload = function(){
 		disabled = false;
 	}
 
-	function reset(){
-		location.reload();
+	function youWin(){
+		setTimeout(function(){
+			alert("You win!");
+		},250);
+		setTimeout(function(){
+			location.reload();
+		},1500);
 	}
+
+
 
 
 /*

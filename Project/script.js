@@ -52,10 +52,11 @@ window.onload = function(){
 
 	var cells = document.querySelectorAll(".row > div");
 	var endGameCounter = 0;
-	var turnsStart = 10;
+	var turnsStart = 2;
 	var turns = turnsStart;
 	var display = document.getElementById("display");
 	display.innerText = "You have "+turns+" turns remaining"
+	var button = document.querySelector("#btn");
 	var prevColor = Math.random();
 	var disabled = false;
 
@@ -83,7 +84,6 @@ window.onload = function(){
 		});
 	}
 	
-	
 	// end game if all are up
 
 	function flipBack(){
@@ -98,8 +98,7 @@ window.onload = function(){
 		turns -= 1;
 		if(turns === 1){
 			display.innerText = "Careful! Only one turn remaining."
-		} else if (turns ===0) {
-			display.innerText = "You lose!"
+			display.setAttribute("class", "col-xs-12 text-center alert alert-warning");
 		} else {
 			display.innerText = "You have "+turns+" turns remaining."
 		}
@@ -110,107 +109,23 @@ window.onload = function(){
 
 	function youWin(){
 		setTimeout(function(){
-			alert("You win! It took you "+ (turnsStart-turns) + " turns.");
-			display.innerText = "You win with " (turnsStart-turns) + " turns remaining."
+			display.setAttribute("class", "col-xs-12 text-center alert alert-success");
+			display.innerText = "You win with " +(turnsStart-turns) + " turns remaining!"
+			button.innerHTML = "Play again"
 		},250);
-		setTimeout(function(){
-			location.reload();
-		},1500);
 	}
 
-	function youLose(){
-		setTimeout(function(){
-			alert("You lose!");
-		},250);
-		setTimeout(function(){
-			location.reload();
-		},1500);
+	function youLose(){	
+		display.setAttribute("class", "col-xs-12 text-center alert alert-danger");
+		display.innerText = "You lose!"
+		button.innerHTML = "Try again"
 	}
 
 
-/*
-	// bring list in from localStorage if applicable
-	
-	var listArr = JSON.parse(localStorage.getItem("currentList"));
-	var form = document.querySelector("form");
-	var list = document.querySelector("ul");
-	var span = document.createElement("span");
+	// set up reset button
 
-	if(listArr.length > 0) {
-		for (var i=0; i<listArr.length; i++) {
-			var oldToDo = document.createElement("li");
-			oldToDo.innerText = listArr[i].todo;
-			oldToDo.setAttribute("class", "list-group-item");
-			oldToDo.setAttribute("ID", i);
-			if(listArr[i].done) {
-				oldToDo.setAttribute("class", "list-group-item disabled");
-			} else {
-				oldToDo.setAttribute("class", "list-group-item")
-			}
-			list.appendChild(oldToDo);
-		}
-	} else {
-		listArr = [];
-	}
-
-	var counter = listArr.length;
-
-	// add a new To Do item
-
-	form.addEventListener("submit", function(event){
-		var newToDo = document.createElement("li");
-		newToDo.innerText = form.elements[0].value;
-		newToDo.setAttribute("class", "list-group-item");
-		newToDo.setAttribute("done", "false");
-		newToDo.setAttribute("ID", counter);
-		counter += 1;
-		if (newToDo.innerText.length === 0) {
-			form.preventDefault();
-		} else {
-			list.appendChild(newToDo);
-			listArr.push({
-				todo: newToDo.innerText,
-				done: false
-			});
-			localStorage.setItem("currentList", JSON.stringify(listArr));
-			form.reset();
-		}
+	button.addEventListener("click", function(event){
+		location.reload();
 	});
-
-	// mark an item as completed
-
-	list.addEventListener("click", function(event){
-		if (event.target.getAttribute("class") === "list-group-item") {
-			event.target.setAttribute("class", "list-group-item disabled");
-			for (var i=0; i<listArr.length; i++) {
-				if(listArr[i].todo === event.target.innerText) {
-					listArr[i].done = true;
-				}
-			}
-		} else {
-			event.target.setAttribute("class", "list-group-item");
-			for (var i=0; i<listArr.length; i++) {
-				if(listArr[i].todo === event.target.innerText) {
-					listArr[i].done = false;
-				}
-			}
-		}
-		localStorage.setItem("currentList", JSON.stringify(listArr));
-	});
-
-	// remove an item
-
-	list.addEventListener("mouseover", function(event){
-		event.target.appendChild(span);
-		span.setAttribute("class", "glyphicon glyphicon-remove pull-right");
-	});
-
-	span.addEventListener("click", function(event){
-		event.target.parentNode.remove();
-		var id = event.target.parentNode.getAttribute("ID");
-		listArr.splice(id,1);
-		localStorage.setItem("currentList", JSON.stringify(listArr));
-	});
-*/
 
 };

@@ -19,7 +19,7 @@ window.onload = function(){
 		5: "red",
 		6: "pink",
 		7: "orange",
-		8: "teal"
+		8: "lightblue"
 	}
 
 	var colorCount = {
@@ -30,9 +30,13 @@ window.onload = function(){
 		"red": 0,
 		"pink": 0,
 		"orange": 0,
-		"teal": 0
+		"lightblue": 0
 	}
 
+	// if class is down, gray. if class is up, use this code
+
+
+	upObj = {}
 	for (var i=0; i<4; i++) {
 		for (var j=0; j<4; j++) {
 			var random = Math.floor(Math.random()*8) + 1;
@@ -40,17 +44,28 @@ window.onload = function(){
 				// need a new random number
 				random = Math.floor(Math.random()*8) + 1;
 			} 
-			nameArr[i][j].style.backgroundColor = colorObj[random];
+			upObj[nameArr[i][j].getAttribute("id")] = colorObj[random];
 			colorCount[colorObj[random]] += 1;
 		}
 	}
-
+	//alert(upObj['no11']);
 
 	// change color on click
 
-	//no11.addEventListener("click", function(event){
-	//	no11.style.backgroundColor = "purple";
-	//});
+	var cells = document.querySelectorAll(".row > div");
+
+	for(i=0; i<cells.length; i++) {
+		cells[i].addEventListener("click", function(event){
+			if (event.target.getAttribute("class") === "col-xs-2 col-xs-offset-1 down") {
+				event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 up");
+				event.target.style.backgroundColor = upObj[event.target.getAttribute("id")];
+			} else {
+				event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 down");
+				event.target.style.backgroundColor = "lightgray";
+			}
+		});
+	}
+	
 
 /*
 	// bring list in from localStorage if applicable

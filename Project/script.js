@@ -48,24 +48,63 @@ window.onload = function(){
 			colorCount[colorObj[random]] += 1;
 		}
 	}
-	//alert(upObj['no11']);
 
 	// change color on click
 
 	var cells = document.querySelectorAll(".row > div");
+	var endGameCounter = 0;
+	var prevColor = Math.random();
+	var disabled = false;
 
-	for(i=0; i<cells.length; i++) {
-		cells[i].addEventListener("click", function(event){
-			if (event.target.getAttribute("class") === "col-xs-2 col-xs-offset-1 down") {
-				event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 up");
-				event.target.style.backgroundColor = upObj[event.target.getAttribute("id")];
-			} else {
-				event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 down");
-				event.target.style.backgroundColor = "lightgray";
-			}
-		});
+	if(disabled === false){
+		for(i=0; i<cells.length; i++) {
+			cells[i].addEventListener("click", function(event){
+				
+				if (event.target.getAttribute("class") === "col-xs-2 col-xs-offset-1 down") {
+					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 up");
+					event.target.style.backgroundColor = upObj[event.target.getAttribute("id")];
+					endGameCounter += 1;
+					//alert(endGameCounter);
+					if (event.target.style.backgroundColor === prevColor && endGameCounter % 2===0) {
+						//alert("Match!");
+					} else if (event.target.style.backgroundColor !== prevColor && endGameCounter % 2===0) {
+						disabled = true;
+						setTimeout(function(){
+						    flipBack();
+						},1000);
+					} 
+					prevColor = event.target.style.backgroundColor;
+				} else {
+					event.target.setAttribute("class", "col-xs-2 col-xs-offset-1 down");
+					event.target.style.backgroundColor = "lightgray";
+					endGameCounter -= 1;
+					prevColor = Math.random();
+				}
+				if (endGameCounter === 16) {
+					alert ("You win!");
+					reset();
+				}
+			});
+		}
 	}
 	
+	// end game if all are up
+
+	function flipBack(){
+		for (var i=0; i<4; i++) {
+			for (var j=0; j<4; j++) {
+				nameArr[i][j].setAttribute("class", "col-xs-2 col-xs-offset-1 down");
+				nameArr[i][j].style.backgroundColor = "lightgray";
+			}
+		}
+		endGameCounter = 0;
+		disabled = false;
+	}
+
+	function reset(){
+		location.reload();
+	}
+
 
 /*
 	// bring list in from localStorage if applicable

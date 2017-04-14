@@ -1,0 +1,9 @@
+Katie Krieger
+4/13/17
+
+
+Events Exercises
+https://www.rithmschool.com/courses/intermediate-javascript/javascript-dom-events-exercises
+
+Parts 1 and 2
+See JavaScript file in this folder.
